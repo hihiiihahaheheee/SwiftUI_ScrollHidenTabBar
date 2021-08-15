@@ -11,10 +11,12 @@ struct Home: View {
     
     // Current TabBar ....
     @State var currentTab = "Mail"
+    var bottomEdge: CGFloat
     
     // Hiding Native TabBar...
-    init() {
+    init(bottomEdge: CGFloat) {
         UITabBar.appearance().isHidden = true
+        self.bottomEdge = bottomEdge
     }
     
     
@@ -23,13 +25,19 @@ struct Home: View {
         // Tab View....
         TabView(selection: $currentTab,
                 content:  {
-                    Text("Mail").tag("Mail")
-                    Text("Meet").tag("Meet")
+                    Text("Mail")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.primary.opacity(0.05))
+                        .tag("Mail")
+                    Text("Meet")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.primary.opacity(0.05))
+                        .tag("Meet")
                 })
             .overlay(
                 
                 // Custom TabBar ...
-                CustomTabBar(currentTab: $currentTab),
+                CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge),
                 alignment: .bottom
             )
     }
